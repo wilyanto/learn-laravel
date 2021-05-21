@@ -128,7 +128,6 @@ class UserController extends Controller
                     409
                 );
             }
-
             $user->admin = $request->admin;
         }
 
@@ -157,6 +156,12 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user = User::findOrFail($id);
+
+        $user->delete();
+
+        return response()->json([
+            'data' => $user,
+        ], 200);
     }
 }
