@@ -50,16 +50,36 @@ class User extends Authenticatable
      *
      * @var array
      */
-    
-    public function isVerified() {
+
+    // Mutators and Accessor
+
+    public function setNameAttribute($name)
+    {
+        $this->attributes['name'] = strtolower($name);
+    }
+
+    public function getNameAttribute($name)
+    {
+        return ucwords($name);
+    }
+
+    public function setEmailAttribute($email)
+    {
+        $this->attributes['email'] = strtolower($email);
+    }
+
+    public function isVerified()
+    {
         return $this->verified == User::VERIFIED_USER;
     }
 
-    public function isAdmin() {
+    public function isAdmin()
+    {
         return $this->admin == User::ADMIN_USER;
     }
 
-    public static function generateVerificationCode() {
+    public static function generateVerificationCode()
+    {
         return Str::random(40);
     }
 }
