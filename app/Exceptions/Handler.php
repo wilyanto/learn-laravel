@@ -55,6 +55,8 @@ class Handler extends ExceptionHandler
             return $this->errorResponse("Does not exists any {$modelName} with the specified identificator", 404);
         } else if ($e instanceof AuthenticationException) {
             return $this->unauthenticated($request, $e);
+        } else if ($e instanceof AuthenticationException) {
+            return $this->errorResponse($e->getMessage(), 403);
         }
         return parent::render($request, $e);
     }
