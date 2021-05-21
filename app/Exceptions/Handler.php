@@ -4,6 +4,7 @@ namespace App\Exceptions;
 
 use App\Traits\ApiResponser;
 use Exception;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
@@ -55,7 +56,7 @@ class Handler extends ExceptionHandler
             return $this->errorResponse("Does not exists any {$modelName} with the specified identificator", 404);
         } else if ($e instanceof AuthenticationException) {
             return $this->unauthenticated($request, $e);
-        } else if ($e instanceof AuthenticationException) {
+        } else if ($e instanceof AuthorizationException) {
             return $this->errorResponse($e->getMessage(), 403);
         }
         return parent::render($request, $e);
