@@ -39,6 +39,10 @@ class AppServiceProvider extends ServiceProvider
         });
 
         User::created(function ($user) {
+            retry(5, function () use ($user) {
+                Mail::to($user)->send(new UserCreated($user));
+            }, 100);
+
             Mail::to($user)->send(new UserCreated($user));
         });
 
