@@ -59,7 +59,7 @@ Route::resource('categories.transactions', CategoryTransactionController::class,
 Route::resource('products', ProductController::class, ['only' => ['index', 'show']]);
 Route::resource('products.transactions', ProductTransactionController::class, ['only' => ['index']]);
 Route::resource('products.buyers', ProductBuyerController::class, ['only' => ['index']]);
-Route::resource('products.categories', ProductCategoryController::class, ['only' => ['index', 'update']]);
+Route::resource('products.categories', ProductCategoryController::class, ['only' => ['index', 'update', 'destroy']]);
 
 // Sellers
 Route::resource('sellers', SellerController::class, ['only' => ['index', 'show']]);
