@@ -18,7 +18,7 @@ class BuyerSellerController extends ApiController
         $sellers = $buyer->transactions()->with('product.seller')
             ->get()
             ->pluck('product.seller')
-            ->unique('id')
+            ->unique()
             ->values();
 
         return $this->showAll($sellers);
