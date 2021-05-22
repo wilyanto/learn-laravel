@@ -63,7 +63,7 @@ class ProductBuyerTransactionController extends ApiController
         }
 
         if ($product->quantity < $request->quantity) {
-            return $this->errorResponse("The product qty does not enough for this transaction", 409);
+            return $this->errorResponse("The product quantity does not enough for this transaction", 409);
         }
 
         return DB::transaction(function () use ($request, $product, $buyer) {
