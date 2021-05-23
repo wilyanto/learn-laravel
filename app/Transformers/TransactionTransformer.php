@@ -15,7 +15,7 @@ class TransactionTransformer extends TransformerAbstract
     protected $defaultIncludes = [
         //
     ];
-    
+
     /**
      * List of resources possible to include
      *
@@ -24,7 +24,7 @@ class TransactionTransformer extends TransformerAbstract
     protected $availableIncludes = [
         //
     ];
-    
+
     /**
      * A Fractal transformer.
      *
@@ -41,5 +41,20 @@ class TransactionTransformer extends TransformerAbstract
             'updated_at' => (string) $transaction->updated_at,
             'deleted_at' => isset($transaction->deleted_at) ? (string) $transaction->deleted_at : null,
         ];
+    }
+
+    public static function originalAttribute($index)
+    {
+        $attributes = [
+            'id' => 'id',
+            'quantity' => 'quantity',
+            'buyer_id' => 'buyer_id',
+            'product_id' => 'product_id',
+            'created_at' => 'created_at',
+            'updated_at' => 'updated_at',
+            'deleted_at' => 'deleted_at',
+        ];
+
+        return isset($attributes[$index]) ? $attributes[$index] : null;
     }
 }

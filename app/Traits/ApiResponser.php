@@ -4,6 +4,7 @@ namespace App\Traits;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Log;
 
 trait ApiResponser
 {
@@ -24,10 +25,13 @@ trait ApiResponser
         }
 
         $transformer = $collection->first()->transformer;
-        if (!$transformer) {
-            return $this->successResponse(['data' => $collection], $code);
+
+        if ($transformer == null) {
+            $collection = $this->sortData($collection, null);
+            return $this->successResponse(['data' => $collection->values()], $code);
         }
 
+        $collection = $this->sortData($collection, $transformer);
         $collection = $this->transformData($collection, $transformer);
         return $this->successResponse($collection, $code);
     }
@@ -38,7 +42,7 @@ trait ApiResponser
         if (!$transformer) {
             return $this->successResponse(['data' => $model], $code);
         }
-        
+
         $model = $this->transformData($model, $transformer);
         return $this->successResponse($model, $code);
     }
@@ -46,6 +50,15 @@ trait ApiResponser
     protected function showMessage($message, $code = 200)
     {
         return $this->successResponse(['data' => $message], $code);
+    }
+
+    protected function sortData(Collection $collection, $transformer)
+    {
+        if (request()->has('sort_by')) {
+            $attribute = $transformer != null ? $transformer::originalAttribute(request()->sort_by) : request()->sort_by;
+            $collection = $collection->sortBy->$attribute;
+        }
+        return $collection;
     }
 
     protected function transformData($data, $transformer)

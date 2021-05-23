@@ -15,7 +15,7 @@ class UserTransformer extends TransformerAbstract
     protected $defaultIncludes = [
         //
     ];
-    
+
     /**
      * List of resources possible to include
      *
@@ -24,7 +24,7 @@ class UserTransformer extends TransformerAbstract
     protected $availableIncludes = [
         //
     ];
-    
+
     /**
      * A Fractal transformer.
      *
@@ -42,5 +42,21 @@ class UserTransformer extends TransformerAbstract
             'updated_at' => (string) $user->updated_at,
             'deleted_at' => isset($user->deleted_at) ? (string) $user->deleted_at : null,
         ];
+    }
+
+    public static function originalAttribute($index)
+    {
+        $attributes = [
+            'id' => 'id',
+            'name' => 'name',
+            'email' => 'email',
+            'is_verified' => 'verified',
+            'is_admin' => 'admin',
+            'created_at' => 'created_at',
+            'updated_at' => 'updated_at',
+            'deleted_at' => 'deleted_at',
+        ];
+
+        return isset($attributes[$index]) ? $attributes[$index] : null;
     }
 }
